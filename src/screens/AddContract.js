@@ -3,6 +3,7 @@ import { View, ScrollView, Image, Alert, TouchableOpacity, Platform } from 'reac
 import { Text, TextInput, Button } from 'react-native-paper';
 import { launchImageLibrary } from 'react-native-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { ToastAndroid } from 'react-native';
 
 export default function AddContract() {
   const [photo, setPhoto] = useState(null);
@@ -79,23 +80,23 @@ export default function AddContract() {
 
   const validateForm = () => {
     if (!contractName.trim()) {
-      Alert.alert('Validation Error', 'Please enter contract name');
+    ToastAndroid.show('Please enter contract name', ToastAndroid.SHORT);
       return false;
     }
     if (!clientName.trim()) {
-      Alert.alert('Validation Error', 'Please enter client name');
+        ToastAndroid.show('Please enter client name', ToastAndroid.SHORT);
       return false;
     }
     if (!location.trim()) {
-      Alert.alert('Validation Error', 'Please enter location');
+        ToastAndroid.show('Please enter location', ToastAndroid.SHORT);
       return false;
     }
     if (!budget.trim()) {
-      Alert.alert('Validation Error', 'Please enter budget');
+        ToastAndroid.show('Please enter budget', ToastAndroid.SHORT);
       return false;
     }
     if (endDate <= startDate) {
-      Alert.alert('Validation Error', 'End date must be after start date');
+        ToastAndroid.show('End date must be after start date', ToastAndroid.SHORT);
       return false;
     }
     return true;
@@ -116,7 +117,7 @@ export default function AddContract() {
       };
       
       console.log('Contract Data:', contractData);
-      Alert.alert('Success', 'Contract added successfully!');
+      ToastAndroid.show('Contract added successfully!', ToastAndroid.SHORT);
       
       // Reset form
       setContractName('');
@@ -131,22 +132,12 @@ export default function AddContract() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
+    <View className="flex-1 bg-white">
       <ScrollView contentContainerStyle={{ padding: 16 }}>
-        <Text style={{ 
-          fontSize: 24, 
-          fontWeight: 'bold', 
-          color: '#6200ea', 
-          marginBottom: 12, 
-          textAlign: 'center' 
-        }}>
+        <Text className="text-2xl font-bold text-primary mb-3 text-center">
           Add New Contract
         </Text>
-        <Text style={{ 
-          color: '#666', 
-          textAlign: 'center', 
-          marginBottom: 24 
-        }}>
+        <Text className="text-gray-600 text-center mb-6">
           Fill in the details below to create a new contract record.
         </Text>
 
@@ -156,8 +147,8 @@ export default function AddContract() {
           mode="outlined"
           value={contractName}
           onChangeText={setContractName}
-          style={{ marginBottom: 16 }}
-          theme={{ roundness: 20 }}
+          className="mb-4"
+          outlineStyle={{ borderRadius: 20 }}
         />
         
         <TextInput
@@ -165,8 +156,8 @@ export default function AddContract() {
           mode="outlined"
           value={clientName}
           onChangeText={setClientName}
-          style={{ marginBottom: 16 }}
-          theme={{ roundness: 20 }}
+          className="mb-4"
+          outlineStyle={{ borderRadius: 20 }}
         />
         
         <TextInput
@@ -174,17 +165,13 @@ export default function AddContract() {
           mode="outlined"
           value={location}
           onChangeText={setLocation}
-          style={{ marginBottom: 16 }}
-          theme={{ roundness: 20 }}
+          className="mb-4"
+          outlineStyle={{ borderRadius: 20 }}
         />
 
         {/* Dates */}
-        <View style={{ 
-          flexDirection: 'row', 
-          justifyContent: 'space-between', 
-          marginBottom: 16 
-        }}>
-          <View style={{ flex: 1, marginRight: 8 }}>
+        <View className="flex-row justify-between mb-4">
+          <View className="flex-1 mr-2">
             <TouchableOpacity onPress={showStartDatePickerHandler}>
               <TextInput
                 label="Start Date"
@@ -192,12 +179,12 @@ export default function AddContract() {
                 value={formatDate(startDate)}
                 editable={false}
                 right={<TextInput.Icon icon="calendar" />}
-                theme={{ roundness: 20 }}
+                outlineStyle={{ borderRadius: 20 }}
               />
             </TouchableOpacity>
           </View>
           
-          <View style={{ flex: 1, marginLeft: 8 }}>
+          <View className="flex-1 ml-2">
             <TouchableOpacity onPress={showEndDatePickerHandler}>
               <TextInput
                 label="End Date"
@@ -205,7 +192,7 @@ export default function AddContract() {
                 value={formatDate(endDate)}
                 editable={false}
                 right={<TextInput.Icon icon="calendar" />}
-                theme={{ roundness: 20 }}
+                outlineStyle={{ borderRadius: 20 }}
               />
             </TouchableOpacity>
           </View>
@@ -243,8 +230,8 @@ export default function AddContract() {
           keyboardType="numeric"
           value={budget}
           onChangeText={setBudget}
-          style={{ marginBottom: 16 }}
-          theme={{ roundness: 20 }}
+          className="mb-4"
+          outlineStyle={{ borderRadius: 20 }}
         />
         
         <TextInput
@@ -254,13 +241,13 @@ export default function AddContract() {
           numberOfLines={4}
           value={description}
           onChangeText={setDescription}
-          style={{ marginBottom: 16 }}
-          theme={{ roundness: 20 }}
+          className="mb-4"
+          outlineStyle={{ borderRadius: 20 }}
         />
 
         {/* Image Section */}
         {photo && (
-          <View style={{ alignItems: 'center', marginBottom: 16 }}>
+          <View className="items-center mb-4">
             <Image
               source={{ uri: photo }}
               style={{ 
@@ -272,9 +259,9 @@ export default function AddContract() {
             />
             <TouchableOpacity 
               onPress={() => setPhoto(null)}
-              style={{ marginTop: 8 }}
+              className="mt-2"
             >
-              <Text style={{ color: '#ff4444', textAlign: 'center' }}>
+              <Text className="text-red-500 text-center">
                 Remove Image
               </Text>
             </TouchableOpacity>
@@ -285,23 +272,21 @@ export default function AddContract() {
           icon="camera"
           mode="outlined"
           onPress={handleChoosePhoto}
-          style={{ marginBottom: 24, borderRadius: 20 }}
+          className="mb-6"
+          style={{ borderRadius: 20 }}
         >
           {photo ? 'Change Image' : 'Upload Image'}
         </Button>
 
         {/* Action Buttons */}
-        <View style={{ flexDirection: 'row', marginTop: 16 }}>
+        <View className="flex-row space-x-4 mt-4">
           <Button
             mode="contained"
             onPress={handleAddContract}
-            style={{ 
-              flex: 1, 
-              backgroundColor: '#2e7d32',
-              borderRadius: 20 
-            }}
+            className="flex-1 bg-green-700"
             contentStyle={{ paddingVertical: 12 }}
             labelStyle={{ fontWeight: 'bold', fontSize: 16 }}
+            style={{ borderRadius: 20 }}
           >
             Add Contract
           </Button>

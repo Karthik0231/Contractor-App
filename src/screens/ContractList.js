@@ -4,6 +4,7 @@ import { useTheme } from 'react-native-paper';
 import { TextInput, Button, Card, Chip, FAB, Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
+import BottomNavigationWrapper from '../BottomNav';
 
 export default function ContractList() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -105,8 +106,9 @@ export default function ContractList() {
   };
 
   return (
+    <BottomNavigationWrapper currentRoute="contracts">
     <View className="flex-1 bg-gray-50">
-      <StatusBar barStyle="light-content" backgroundColor="#3B82F6" />
+      <StatusBar barStyle="light-content" backgroundColor="purple" />
       
       {/* Header */}
       <View className="bg-blue-600 pt-12 pb-8 px-6 rounded-b-3xl shadow-lg">
@@ -237,7 +239,7 @@ export default function ContractList() {
                     </View>
 
                     {/* Progress Bar */}
-                    <View className="mb-2">
+                    {/* <View className="mb-2">
                       <View className="flex-row justify-between items-center mb-1">
                         <Text className="text-sm text-gray-700 font-semibold">
                           Progress
@@ -255,7 +257,7 @@ export default function ContractList() {
                           }} 
                         />
                       </View>
-                    </View>
+                    </View> */}
 
                     <Divider className="mb-2" />
 
@@ -312,9 +314,10 @@ export default function ContractList() {
                       className="mr-2 rounded-xl flex-1"
                       contentStyle={{ paddingVertical: 4 }}
                       labelStyle={{ fontSize: 14, fontWeight: '600' }}
-                      icon="eye"
+                      icon="file-cog"
+                      onPress={() => navigation.navigate('ManageContract', { contract: item })}
                     >
-                      View Details
+                      Manage 
                     </Button>
                     <Button 
                       mode="outlined" 
@@ -324,6 +327,7 @@ export default function ContractList() {
                       contentStyle={{ paddingVertical: 4 }}
                       labelStyle={{ fontSize: 14, fontWeight: '600' }}
                       icon="delete"
+                      onPress={() => console.log(`Delete contract: ${item.name}`)}
                     >
                       delete
                     </Button>
@@ -348,7 +352,7 @@ export default function ContractList() {
       />
 
       {/* Floating Action Button */}
-      <FAB
+      {/* <FAB
         icon="plus"
         onPress={() => navigation.navigate('AddContract')}
         className="absolute bottom-6 right-6 bg-primary shadow-lg"
@@ -361,7 +365,8 @@ export default function ContractList() {
           shadowOpacity: 0.3,
           shadowRadius: 12
         }}
-      />
+      /> */}
     </View>
+    </BottomNavigationWrapper>
   );
 }

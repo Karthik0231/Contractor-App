@@ -170,7 +170,7 @@ const BottomNavigationWrapper = ({ children, currentRoute = 'home' }) => {
       {showFab && (
 <View className="absolute self-center bottom-16 z-50 items-center justify-center">
   {/* Outer circular background container for margin + shadow */}
-  <View className="w-20 h-15 rounded-full bg-white shadow-2xl items-center justify-center">
+  <View className="w-20 h-16 rounded-full shadow-2xl items-center justify-center">
     <FAB
       icon="plus"
       onPress={handleFabPress}
